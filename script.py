@@ -1,6 +1,6 @@
 from telegram import (
     Update, InlineKeyboardButton, InlineKeyboardMarkup,
-    ReplyKeyboardMarkup, KeyboardButton
+    ReplyKeyboardMarkup, KeyboardButton, InputFile
 )
 from telegram.ext import (
     Application, CommandHandler, MessageHandler, CallbackQueryHandler,
@@ -8,12 +8,15 @@ from telegram.ext import (
 )
 import logging
 import datetime
+import json
+import os
 
 # ======= НАСТРОЙКИ =========
 BOT_TOKEN = "7739338057:AAHFzDpOgh-XrBr-vqWvV5TEqKs62HQS9zY"
 CHANNEL_ID = -1002496521038
 CHANNEL_LINK = "https://t.me/num_insight"
 ADMIN_ID = 405069873
+USERS_FILE = "users.json"
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -21,6 +24,8 @@ logger = logging.getLogger(__name__)
 # ======= Conversation states =======
 ASK_BIRTHDATE = 0
 SHOWING_KEYS = 1
+NEW_POST_TEXT = 2
+NEW_POST_IMAGE = 3
 
 # ======= Тексты для ключей =========
 CONSCIOUSNESS_ENERGY_TEXTS = {i: f"Энергия сознания номер {i}: ты уникален!" for i in range(1, 23)}
@@ -54,12 +59,15 @@ def get_subscription_markup():
     ]
     return InlineKeyboardMarkup(keyboard)
 
-def get_main_menu_markup():
+def get_main_menu_markup(user_id=None):
+    is_admin = user_id == ADMIN_ID
     keyboard = [
         [InlineKeyboardButton("ℹ️ Помощь", callback_data="help")],
         [InlineKeyboardButton("📅 Рассчет по дню рождения", callback_data="birthday_calc")],
         [InlineKeyboardButton("🚪 Уйти", callback_data="exit")]
     ]
+    if is_admin:
+        keyboard.append([InlineKeyboardButton("📝 Новый пост", callback_data="new_post")])
     return InlineKeyboardMarkup(keyboard)
 
 def get_next_key_markup():
@@ -72,6 +80,20 @@ def get_final_menu_markup():
     ]
     return InlineKeyboardMarkup(keyboard)
 
+# ======= Работа с JSON =========
+def load_users():
+    if os.path.exists(USERS_FILE):
+        with open(USERS_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return []
+
+def save_user(user_id):
+    users = load_users()
+    if user_id not in users:
+        users.append(user_id)
+        with open(USERS_FILE, "w", encoding="utf-8") as f:
+            json.dump(users, f, ensure_ascii=False)
+
 # ======= Проверка подписки ===========
 async def check_subscription(user_id, context: ContextTypes.DEFAULT_TYPE):
     try:
@@ -81,9 +103,10 @@ async def check_subscription(user_id, context: ContextTypes.DEFAULT_TYPE):
         logger.warning(f"Ошибка проверки подписки: {e}")
         return False
 
-# ======= Старт бота ===========
+# ======= Старт бота =========
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
+    save_user(user.id)
     await update.message.reply_text(
         f"👋 Привет, {user.first_name}! Бот готов к работе. Выберите действие ниже.",
         reply_markup=START_KEYBOARD
@@ -109,13 +132,13 @@ async def send_main_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
     text = f"👋 Привет, {user.first_name}! Бот готов к работе. Выберите действие ниже."
     if update.message:
-        await update.message.reply_text(text, reply_markup=get_main_menu_markup())
+        await update.message.reply_text(text, reply_markup=get_main_menu_markup(user.id))
     elif update.callback_query:
         try:
-            await update.callback_query.edit_message_text(text, reply_markup=get_main_menu_markup())
+            await update.callback_query.edit_message_text(text, reply_markup=get_main_menu_markup(user.id))
         except:
             await update.callback_query.message.delete()
-            await update.callback_query.message.chat.send_message(text, reply_markup=get_main_menu_markup())
+            await update.callback_query.message.chat.send_message(text, reply_markup=get_main_menu_markup(user.id))
 
 # ======= Доп. информация ===========
 async def send_additional_info(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -148,6 +171,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
     data = query.data
+    user_id = query.from_user.id
 
     if data == "help":
         await query.edit_message_text("ℹ️ Здесь будет помощь по боту. Введите /help для справки.")
@@ -168,6 +192,9 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await send_main_menu(update, context)
     elif data == "exit":
         await exit_callback(update, context)
+    elif data == "new_post" and user_id == ADMIN_ID:
+        await query.message.reply_text("Введите текст нового поста:")
+        return NEW_POST_TEXT
 
 # ======= Расчёт ключей ===========
 def reduce_to_limit(number: int, limit: int) -> int:
@@ -245,6 +272,41 @@ async def next_key_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         return ConversationHandler.END
 
+# ======= Новый пост (админ) ===========
+async def new_post_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    context.user_data['post_text'] = update.message.text
+    await update.message.reply_text("Теперь отправьте картинку для поста (или /skip если без картинки).")
+    return NEW_POST_IMAGE
+
+async def new_post_image(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    photo = update.message.photo
+    if photo:
+        file_id = photo[-1].file_id
+        context.user_data['post_image'] = file_id
+    await broadcast_post(update, context)
+    return ConversationHandler.END
+
+async def skip_post_image(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    context.user_data['post_image'] = None
+    await broadcast_post(update, context)
+    return ConversationHandler.END
+
+async def broadcast_post(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    text = context.user_data.get('post_text')
+    image = context.user_data.get('post_image')
+    users = load_users()
+
+    for user_id in users:
+        try:
+            if image:
+                await context.bot.send_photo(chat_id=user_id, photo=image, caption=text)
+            else:
+                await context.bot.send_message(chat_id=user_id, text=text)
+        except Exception as e:
+            logger.warning(f"Не удалось отправить пользователю {user_id}: {e}")
+
+    await update.message.reply_text("✅ Пост успешно разослан всем пользователям!")
+
 # ======= /help ===========
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = (
@@ -284,17 +346,22 @@ def main():
         entry_points=[CallbackQueryHandler(button_handler, pattern="^birthday_calc$")],
         states={
             ASK_BIRTHDATE: [MessageHandler(filters.TEXT & ~filters.COMMAND, birthday_calc_receive)],
-            SHOWING_KEYS: [CallbackQueryHandler(next_key_handler, pattern="^next_key$")]
+            SHOWING_KEYS: [CallbackQueryHandler(next_key_handler, pattern="^next_key$")],
+            NEW_POST_TEXT: [MessageHandler(filters.TEXT & ~filters.COMMAND, new_post_text)],
+            NEW_POST_IMAGE: [
+                MessageHandler(filters.PHOTO, new_post_image),
+                CommandHandler("skip", skip_post_image)
+            ]
         },
         fallbacks=[CommandHandler("cancel", cancel)],
-        allow_reentry=True,
+        allow_reentry=True
     )
 
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("help", help_command))
     app.add_handler(CallbackQueryHandler(continue_callback, pattern="^continue$"))
     app.add_handler(CallbackQueryHandler(exit_callback, pattern="^exit$"))
-    app.add_handler(CallbackQueryHandler(button_handler, pattern="^(help|menu)$"))
+    app.add_handler(CallbackQueryHandler(button_handler, pattern="^(help|menu|new_post)$"))
     app.add_handler(conv_handler)
     app.add_handler(MessageHandler(filters.ALL & ~filters.COMMAND, default_handler))
 
