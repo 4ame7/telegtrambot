@@ -21,27 +21,25 @@ USERS_FILE = "users.json"
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# ======= Conversation states =======
+# ======= STATES =======
 ASK_BIRTHDATE = 0
 SHOWING_KEYS = 1
 NEW_POST_TEXT = 2
 NEW_POST_IMAGE = 3
+PREVIEW_POST = 4
 
 # ======= Тексты для ключей =========
 CONSCIOUSNESS_ENERGY_TEXTS = {i: f"Энергия сознания номер {i}: ты уникален!" for i in range(1, 23)}
 MATERIAL_ENERGY_TEXTS = {i: f"Энергия материи номер {i}: стабильность и сила." for i in range(1, 10)}
 SOUL_ENERGY_TEXTS = {i: f"Энергия души для месяца {i}: внутренний покой." for i in range(1, 13)}
 
-# ======= Дополнительный текст =========
 ADDITIONAL_INFO_TEXT = (
     "Как тебе эта информация? Была ли она полезной?\n\n"
     "Если хочешь глубже разобраться в своей нумерологической карте, подписывайся на мой тг-канал."
 )
 
-# ======= URL картинки для ключей =========
 KEY_IMAGE_URL = "https://i.pinimg.com/736x/a0/a9/70/a0a970e2ab1807b52dd46b3261549509.jpg"
 
-# ======= Клавиатура старта =========
 START_KEYBOARD = ReplyKeyboardMarkup(
     [[KeyboardButton("🚀 Запустить бота")]],
     resize_keyboard=True,
@@ -80,6 +78,13 @@ def get_final_menu_markup():
     ]
     return InlineKeyboardMarkup(keyboard)
 
+def get_preview_markup():
+    keyboard = [
+        [InlineKeyboardButton("✅ Отправить всем", callback_data="broadcast_post"),
+         InlineKeyboardButton("❌ Отменить", callback_data="cancel_post")]
+    ]
+    return InlineKeyboardMarkup(keyboard)
+
 # ======= Работа с JSON =========
 def load_users():
     if os.path.exists(USERS_FILE):
@@ -95,6 +100,7 @@ def save_user(user_id):
             json.dump(users, f, ensure_ascii=False)
 
 # ======= Проверка подписки ===========
+
 async def check_subscription(user_id, context: ContextTypes.DEFAULT_TYPE):
     try:
         member = await context.bot.get_chat_member(CHANNEL_ID, user_id)
@@ -103,7 +109,7 @@ async def check_subscription(user_id, context: ContextTypes.DEFAULT_TYPE):
         logger.warning(f"Ошибка проверки подписки: {e}")
         return False
 
-# ======= Старт бота =========
+# ======= Старт =========
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
     save_user(user.id)
@@ -112,7 +118,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         reply_markup=START_KEYBOARD
     )
 
-# ======= Панель подписки ===========
+# ======= Подписка =======
 async def send_subscription_panel(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = (
         "❌ <b>Вы не подписаны на канал.</b>\n"
@@ -127,7 +133,7 @@ async def send_subscription_panel(update: Update, context: ContextTypes.DEFAULT_
         except:
             pass
 
-# ======= Главное меню ===========
+# ======= Главное меню =======
 async def send_main_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
     text = f"👋 Привет, {user.first_name}! Бот готов к работе. Выберите действие ниже."
@@ -140,13 +146,13 @@ async def send_main_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await update.callback_query.message.delete()
             await update.callback_query.message.chat.send_message(text, reply_markup=get_main_menu_markup(user.id))
 
-# ======= Доп. информация ===========
+# ======= Доп. информация =======
 async def send_additional_info(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [[InlineKeyboardButton("📢 Подписаться на канал", url=CHANNEL_LINK)]]
     reply_markup = InlineKeyboardMarkup(keyboard)
     await update.effective_chat.send_message(ADDITIONAL_INFO_TEXT, reply_markup=reply_markup)
 
-# ======= Продолжить после подписки ===========
+# ======= Продолжить после подписки =======
 async def continue_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
@@ -156,7 +162,7 @@ async def continue_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         await send_subscription_panel(update, context)
 
-# ======= Кнопка "Уйти" ===========
+# ======= Кнопка "Уйти" =======
 async def exit_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
@@ -166,7 +172,7 @@ async def exit_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     except:
         pass
 
-# ======= Кнопки главного меню ===========
+# ======= Логика главного меню =======
 async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
@@ -196,7 +202,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await query.message.reply_text("Введите текст нового поста:")
         return NEW_POST_TEXT
 
-# ======= Расчёт ключей ===========
+# ======= Расчёт ключей =======
 def reduce_to_limit(number: int, limit: int) -> int:
     while number > limit:
         number = sum(int(d) for d in str(number))
@@ -213,7 +219,7 @@ def calculate_energies(day: int, month: int, year: int):
     soul = month
     return consciousness, material, soul
 
-# ======= Отправка ключа с картинкой ===========
+# ======= Отправка ключа с картинкой =======
 async def send_key_with_image(chat, key_title, key_number, key_text):
     try:
         await chat.send_photo(
@@ -224,7 +230,7 @@ async def send_key_with_image(chat, key_title, key_number, key_text):
     except:
         await chat.send_message(f"{key_title} ({key_number}):\n{key_text}", reply_markup=get_next_key_markup())
 
-# ======= Получение даты рождения ===========
+# ======= Получение даты рождения =======
 async def birthday_calc_receive(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = update.message.text.strip()
     try:
@@ -247,7 +253,7 @@ async def birthday_calc_receive(update: Update, context: ContextTypes.DEFAULT_TY
     await send_key_with_image(update.message.chat, key_title, key_number, key_text)
     return SHOWING_KEYS
 
-# ======= Пошаговое отображение ключей ===========
+# ======= Пошаговое отображение ключей =======
 async def next_key_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
@@ -272,7 +278,7 @@ async def next_key_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         return ConversationHandler.END
 
-# ======= Новый пост (админ) ===========
+# ======= Новый пост (админ) =======
 async def new_post_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
     context.user_data['post_text'] = update.message.text
     await update.message.reply_text("Теперь отправьте картинку для поста (или /skip если без картинки).")
@@ -283,15 +289,34 @@ async def new_post_image(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if photo:
         file_id = photo[-1].file_id
         context.user_data['post_image'] = file_id
-    await broadcast_post(update, context)
-    return ConversationHandler.END
+    await preview_post(update, context)
+    return PREVIEW_POST
 
 async def skip_post_image(update: Update, context: ContextTypes.DEFAULT_TYPE):
     context.user_data['post_image'] = None
-    await broadcast_post(update, context)
-    return ConversationHandler.END
+    await preview_post(update, context)
+    return PREVIEW_POST
 
-async def broadcast_post(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def preview_post(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    text = context.user_data.get('post_text')
+    image = context.user_data.get('post_image')
+    if image:
+        await update.message.reply_photo(photo=image, caption=text, reply_markup=get_preview_markup())
+    else:
+        await update.message.reply_text(text, reply_markup=get_preview_markup())
+
+async def preview_button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    query = update.callback_query
+    await query.answer()
+    data = query.data
+    if data == "broadcast_post":
+        await broadcast_post(query, context)
+        return ConversationHandler.END
+    elif data == "cancel_post":
+        await query.message.reply_text("❌ Рассылка отменена.")
+        return ConversationHandler.END
+
+async def broadcast_post(update_or_query, context: ContextTypes.DEFAULT_TYPE):
     text = context.user_data.get('post_text')
     image = context.user_data.get('post_image')
     users = load_users()
@@ -305,9 +330,12 @@ async def broadcast_post(update: Update, context: ContextTypes.DEFAULT_TYPE):
         except Exception as e:
             logger.warning(f"Не удалось отправить пользователю {user_id}: {e}")
 
-    await update.message.reply_text("✅ Пост успешно разослан всем пользователям!")
+    if isinstance(update_or_query, Update):
+        await update_or_query.message.reply_text("✅ Пост успешно разослан всем пользователям!")
+    else:
+        await update_or_query.message.reply_text("✅ Пост успешно разослан всем пользователям!")
 
-# ======= /help ===========
+# ======= /help =======
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = (
         "ℹ️ <b>Помощь по боту:</b>\n"
@@ -318,12 +346,12 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
     await update.message.reply_html(text)
 
-# ======= /cancel ===========
+# ======= /cancel =======
 async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("Операция отменена.")
     return ConversationHandler.END
 
-# ======= Обработка любых других сообщений ===========
+# ======= Обработка любых других сообщений =======
 async def default_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = update.message.text
     if text == "🚀 Запустить бота":
@@ -338,20 +366,31 @@ async def default_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             reply_markup=START_KEYBOARD
         )
 
-# ======= Главная функция ===========
+# ======= MAIN =========
 def main():
     app = Application.builder().token(BOT_TOKEN).build()
 
+    # ===== Conversation для ключей =====
     conv_handler = ConversationHandler(
         entry_points=[CallbackQueryHandler(button_handler, pattern="^birthday_calc$")],
         states={
             ASK_BIRTHDATE: [MessageHandler(filters.TEXT & ~filters.COMMAND, birthday_calc_receive)],
-            SHOWING_KEYS: [CallbackQueryHandler(next_key_handler, pattern="^next_key$")],
+            SHOWING_KEYS: [CallbackQueryHandler(next_key_handler, pattern="^next_key$")]
+        },
+        fallbacks=[CommandHandler("cancel", cancel)],
+        allow_reentry=True
+    )
+
+    # ===== Conversation для поста (админ) =====
+    admin_post_conv = ConversationHandler(
+        entry_points=[CallbackQueryHandler(button_handler, pattern="^new_post$")],
+        states={
             NEW_POST_TEXT: [MessageHandler(filters.TEXT & ~filters.COMMAND, new_post_text)],
             NEW_POST_IMAGE: [
                 MessageHandler(filters.PHOTO, new_post_image),
                 CommandHandler("skip", skip_post_image)
-            ]
+            ],
+            PREVIEW_POST: [CallbackQueryHandler(preview_button_handler, pattern="^(broadcast_post|cancel_post)$")]
         },
         fallbacks=[CommandHandler("cancel", cancel)],
         allow_reentry=True
@@ -361,8 +400,8 @@ def main():
     app.add_handler(CommandHandler("help", help_command))
     app.add_handler(CallbackQueryHandler(continue_callback, pattern="^continue$"))
     app.add_handler(CallbackQueryHandler(exit_callback, pattern="^exit$"))
-    app.add_handler(CallbackQueryHandler(button_handler, pattern="^(help|menu|new_post)$"))
     app.add_handler(conv_handler)
+    app.add_handler(admin_post_conv)
     app.add_handler(MessageHandler(filters.ALL & ~filters.COMMAND, default_handler))
 
     logger.info("Бот запущен...")
