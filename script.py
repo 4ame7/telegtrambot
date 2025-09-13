@@ -32,58 +32,58 @@ SOUL_ENERGY_TEXTS = ENERGIES.get("soul", {})
 # ======= Тексты =======
 ADDITIONAL_INFO_TEXT = (
     "Как тебе эта информация? Была ли она полезной?\n\n"
-    "Если хочешь глубже разобраться в своей нумерологической карте, подписывайся на мой тг-канал."
+    "Если хочешь глубже разобраться в своей нумерологической карте, подписывайся на мой тг-канал «Сонастройка с Ульяной. Там я делюсь разборами, лайфхаками по нумерологии и толкованием снов. »"
 )
 # ======= Картинки для чисел каждого ключа =======
 KEY_IMAGES = {
     "consciousness": {
-        1: "https://static.tildacdn.com/tild3432-6364-4231-b537-626438323165/star_start.jpg",
-        2: "https://i.pinimg.com/736x/02.jpg",
-        3: "https://i.pinimg.com/736x/03.jpg",
-        4: "https://i.pinimg.com/736x/04.jpg",
-        5: "https://i.pinimg.com/736x/05.jpg",
-        6: "https://i.pinimg.com/736x/06.jpg",
-        7: "https://i.pinimg.com/736x/07.jpg",
-        8: "https://i.pinimg.com/736x/08.jpg",
-        9: "https://i.pinimg.com/736x/09.jpg",
-        10: "https://i.pinimg.com/736x/10.jpg",
-        11: "https://i.pinimg.com/736x/11.jpg",
-        12: "https://i.pinimg.com/736x/12.jpg",
-        13: "https://i.pinimg.com/736x/13.jpg",
-        14: "https://i.pinimg.com/736x/14.jpg",
-        15: "https://i.pinimg.com/736x/15.jpg",
-        16: "https://i.pinimg.com/736x/16.jpg",
-        17: "https://i.pinimg.com/736x/17.jpg",
-        18: "https://i.pinimg.com/736x/18.jpg",
-        19: "https://i.pinimg.com/736x/19.jpg",
-        20: "https://i.pinimg.com/736x/20.jpg",
-        21: "https://i.pinimg.com/736x/21.jpg",
-        22: "https://i.pinimg.com/736x/22.jpg"
+        1: "https://drive.google.com/uc?export=download&id=1d9RP3chTKoUhuxXKGHbHPaXtIh41fQdd",
+        2: "https://drive.google.com/uc?export=download&id=15Ql5OgpxOtJ5vc-_lDEI1WcPW69u0koX",
+        3: "https://drive.google.com/uc?export=download&id=1Xugd4Lj6rmN7b3TqMU8Kea3pBeDgH0d6",
+        4: "https://drive.google.com/uc?export=download&id=1ZPSgYUUMJJn8SaC8v2PLdq3YKqsfO5u0",
+        5: "https://drive.google.com/uc?export=download&id=17h-nZi8Jr1-bbBt_qOsaBGY11X56jQIZ",
+        6: "https://drive.google.com/uc?export=download&id=1DV9VO3q0njY6NJcX7sNmMjgDQSDSiuB_",
+        7: "https://drive.google.com/uc?export=download&id=1C8VKXqvnnOnt_-J-lHwpXIeNC5-YAQ3o",
+        8: "https://drive.google.com/uc?export=download&id=1_SFu00EItAsIXSJ2bAd2fr_fy0FR2FmE",
+        9: "https://drive.google.com/uc?export=download&id=15QWjstMC5n9j93rBbtA1iTHIpB6zIAtr",
+        10: "https://drive.google.com/uc?export=download&id=16DMDf5qyXPzgoU4WWWk9cBCehOJ9RYzm",
+        11: "https://drive.google.com/uc?export=download&id=1x7xMuvA7UorpNNfOsLBacihfZGKTuGou",
+        12: "https://drive.google.com/uc?export=download&id=1E6bOylGqrcA142h7eXgGHiSnwD6tXLY7",
+        13: "https://drive.google.com/uc?export=download&id=182vQNBam-NQiH-txNgcchqOcPm4ux_Do",
+        14: "https://drive.google.com/uc?export=download&id=1a3BbKrUxOSg084UIu299gvxehzBKilFk",
+        15: "https://drive.google.com/uc?export=download&id=1GFoTP0PxQHgWpLImb8u_mPo60bOfx-oK",
+        16: "https://drive.google.com/uc?export=download&id=1YILJ1YRY4HM3v0loVAqsy2f6OaEOgOSc",
+        17: "https://drive.google.com/uc?export=download&id=1DJi93iQs4UQFRoITnTOuSh6Qo_zURDtT",
+        18: "https://drive.google.com/uc?export=download&id=1FMttXsBJctwbKjz_DV_z-Loc7sqwyWRp",
+        19: "https://drive.google.com/uc?export=download&id=14JyzC-Ha4BeYamZyAjxNbeu4t0u5gboO",
+        20: "https://drive.google.com/uc?export=download&id=1BIgYMRNbHkvojCFyZAEIEQdJQf9-Su3S",
+        21: "https://drive.google.com/uc?export=download&id=1RmCVWQzgegL4UL_tARkKH1pfBXeKv4hw",
+        22: "https://drive.google.com/uc?export=download&id=1_hWt3VDHPo5p7yZrBdyY5hPTWB6EvUDA"
     },
     "material": {
-        1: "https://i.pinimg.com/736x/m1.jpg",
-        2: "https://i.pinimg.com/736x/m2.jpg",
-        3: "https://i.pinimg.com/736x/m3.jpg",
-        4: "https://i.pinimg.com/736x/m4.jpg",
-        5: "https://i.pinimg.com/736x/m5.jpg",
-        6: "https://i.pinimg.com/736x/m6.jpg",
-        7: "https://i.pinimg.com/736x/m7.jpg",
-        8: "https://i.pinimg.com/736x/m8.jpg",
-        9: "https://i.pinimg.com/736x/m9.jpg"
+        1: "https://drive.google.com/uc?export=download&id=1b6Id_PKwKy-XoZ3Lwuf5694NmPnhrlsx",
+        2: "https://drive.google.com/uc?export=download&id=12W57_-QP-OI0f6HOR7JB1FwOndI_tn6a",
+        3: "https://drive.google.com/uc?export=download&id=1YDyQ5dSTg_jqq5YfqZGoApWaNDUmUkTe",
+        4: "https://drive.google.com/uc?export=download&id=17PmcBBrdo1SHlgJH7buOYhdr97F1QalL",
+        5: "https://drive.google.com/uc?export=download&id=1njO8jjFhxi0Hgy3Nkvb5pC01_E55BETR",
+        6: "https://drive.google.com/uc?export=download&id=1HBiBLkmq-7bobT98sTs3GffcJTKwSNdF",
+        7: "https://drive.google.com/uc?export=download&id=1WeoVha3JaoOAy4eLLeEyztf_hiYx_oZE",
+        8: "https://drive.google.com/uc?export=download&id=1EQ0I0SE0b7QiDtlUPO8bDN3BR9yt8PRw",
+        9: "https://drive.google.com/uc?export=download&id=1oCLlpzYWLy2TqiIUbs-aExf0U-no-vEj"
     },
     "soul": {
-        1: "https://i.pinimg.com/736x/s1.jpg",
-        2: "https://i.pinimg.com/736x/s2.jpg",
-        3: "https://i.pinimg.com/736x/s3.jpg",
-        4: "https://i.pinimg.com/736x/s4.jpg",
-        5: "https://i.pinimg.com/736x/s5.jpg",
-        6: "https://i.pinimg.com/736x/s6.jpg",
-        7: "https://i.pinimg.com/736x/s7.jpg",
-        8: "https://i.pinimg.com/736x/s8.jpg",
-        9: "https://i.pinimg.com/736x/s9.jpg",
-        10: "https://i.pinimg.com/736x/s10.jpg",
-        11: "https://i.pinimg.com/736x/s11.jpg",
-        12: "https://i.pinimg.com/736x/s12.jpg"
+        1: "https://drive.google.com/uc?export=download&id=1i5SQRB1OHNi9pTCQ4vagnb-BOs1ZwXml",
+        2: "https://drive.google.com/uc?export=download&id=1vKKUufczbnSB8-UWGvAGxDrCXGPMKUjK",
+        3: "https://drive.google.com/uc?export=download&id=1vVyZf17S70CpGEcA7fTAtb9G_ALuLfg3",
+        4: "https://drive.google.com/uc?export=download&id=1bmzmzEV7P4vu79PRQHzBB8Xy0TKxp0nZ",
+        5: "https://drive.google.com/uc?export=download&id=15kIq4gnkV4V2wrLnOHl1wyaBpFwmj_ZS",
+        6: "https://drive.google.com/uc?export=download&id=114weFwXxJvBG5s-sTdbpo0mzXgGH84d6",
+        7: "https://drive.google.com/uc?export=download&id=1d2KIja0TCVur_8nAe6GANb4movVP1Jyy",
+        8: "https://drive.google.com/uc?export=download&id=1IZZTPD_DVdHL2gsH2NkR3EKRGraGULAE",
+        9: "https://drive.google.com/uc?export=download&id=1VdSPPy3yLKbDXI8fYs2hGCeyEfNtcF0L",
+        10: "https://drive.google.com/uc?export=download&id=",
+        11: "https://drive.google.com/uc?export=download&id=",
+        12: "https://drive.google.com/uc?export=download&id="
     }
 }
 # ======= Состояния =======
@@ -92,10 +92,11 @@ SHOWING_KEYS = 1
 NEW_POST_TEXT = 2
 NEW_POST_IMAGE = 3
 PREVIEW_POST = 4
+CONFIRM_BIRTHDATE = 5
 
 # ======= Клавиатуры =======
 START_KEYBOARD = ReplyKeyboardMarkup(
-    [[KeyboardButton("🚀 Запустить бота")]],
+    [[KeyboardButton("⚡️ Запустить помощника")]],
     resize_keyboard=True,
     one_time_keyboard=True
 )
@@ -113,13 +114,14 @@ def get_subscription_markup():
 def get_main_menu_markup(user_id=None):
     is_admin = user_id == ADMIN_ID
     keyboard = [
-        [InlineKeyboardButton("ℹ️ Помощь", callback_data="help")],
         [InlineKeyboardButton("📅 Рассчет по дню рождения", callback_data="birthday_calc")],
+        [InlineKeyboardButton("ℹ️ Помощь", callback_data="help")],
         [InlineKeyboardButton("🚪 Уйти", callback_data="exit")]
     ]
     if is_admin:
         keyboard.append([InlineKeyboardButton("📝 Новый пост", callback_data="new_post")])
     return InlineKeyboardMarkup(keyboard)
+
 
 def get_next_key_markup():
     return InlineKeyboardMarkup([[InlineKeyboardButton("➡️ Далее", callback_data="next_key")]])
@@ -166,7 +168,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
     save_user(user.id)
     await update.message.reply_text(
-        f"👋 Привет, {user.first_name}! Бот готов к работе. Выберите действие ниже.",
+        f"👋 Привет, {user.first_name}! Помощник готов к работе. Выберите действие ниже.",
         reply_markup=START_KEYBOARD
     )
 
@@ -174,7 +176,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def send_subscription_panel(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = (
         "❌ <b>Вы не подписаны на канал.</b>\n"
-        "Пожалуйста, подпишитесь, чтобы пользоваться ботом.\n"
+        "Пожалуйста, подпишитесь, чтобы пользоваться помощником.\n"
         "Нажмите 'Продолжить' после подписки для проверки."
     )
     if update.message:
@@ -188,7 +190,7 @@ async def send_subscription_panel(update: Update, context: ContextTypes.DEFAULT_
 # ======= Главное меню =======
 async def send_main_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
-    text = f"👋 Привет, {user.first_name}! Бот готов к работе. Выберите действие ниже."
+    text = f"👋 Привет, {user.first_name}! Помощник готов к работе. Выберите действие ниже."
     if update.message:
         await update.message.reply_text(text, reply_markup=get_main_menu_markup(user.id))
     elif update.callback_query:
@@ -230,8 +232,9 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     data = query.data
     user_id = query.from_user.id
 
+
     if data == "help":
-        await query.edit_message_text("ℹ️ Здесь будет помощь по боту. Введите /help для справки.")
+        await query.edit_message_text("ℹ️ Здесь будет помощь по помощнику. Введите /help для справки.")
     elif data == "birthday_calc":
         intro_text = (
             "Ты знаешь, что твоя дата рождения — это не просто цифры в паспорте?\n\n"
@@ -239,9 +242,9 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "✔ Твои врождённые таланты — что у тебя получается легко, а что нужно развивать.\n"
             "✔ Финансовые энергии — почему одни люди притягивают деньги, а другим они «утекают».\n"
             "✔ Канал вдохновения — откуда к тебе приходят гениальные идеи и как не потерять связь со своим предназначением.\n\n"
-            "Сейчас я помогу тебе раскрыть **3 главных ключа** из твоей даты рождения:\n\n"
+            "Сейчас я помогу тебе раскрыть 3 главных ключа из твоей даты рождения:\n\n"
             "📅 Введи свою дату рождения в формате ДД.ММ.ГГГГ\n"
-            "Например: *26.08.1996*"
+            "Например: 26.08.1996"
         )
         await query.edit_message_text(intro_text, parse_mode="Markdown")
         return ASK_BIRTHDATE
@@ -251,6 +254,11 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await exit_callback(update, context)
     elif data == "new_post" and user_id == ADMIN_ID:
         await query.message.reply_text("Введите текст нового поста:")
+    elif data == "restart_birthday":
+        await query.edit_message_text(
+            "📅 Введи свою дату рождения в формате ДД.ММ.ГГГГ\nНапример: 26.08.1996"
+        )
+        return ASK_BIRTHDATE
         return NEW_POST_TEXT
 
 # ======= Функции для расчёта =======
@@ -270,60 +278,101 @@ def calculate_energies(day: int, month: int, year: int):
     soul = month
     return consciousness, material, soul
 
-# ======= Получение даты рождения =======
+# ======= Ввод даты рождения =======
 async def birthday_calc_receive(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = update.message.text.strip()
     try:
         birthdate = datetime.datetime.strptime(text, "%d.%m.%Y")
     except ValueError:
-        await update.message.reply_text("Неверный формат даты. Используйте ДД.MM.ГГГГ.")
+        await update.message.reply_text("❌ Неверный формат даты. Используйте ДД.MM.ГГГГ.")
+        return ASK_BIRTHDATE
+    keyboard = [
+        [InlineKeyboardButton("✅ Да", callback_data="confirm_date")],
+        [InlineKeyboardButton("⛔ Нет", callback_data="reject_date")]
+    ]
+
+    # сохраняем дату в user_data
+    context.user_data["birthdate"] = birthdate
+
+    # предлагаем подтвердить
+    keyboard = [
+        [InlineKeyboardButton("✅ Да", callback_data="confirm_date")],
+        [InlineKeyboardButton("⛔ Нет", callback_data="reject_date")]
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+
+    await update.message.reply_text(
+        f"Твоя дата рождения — {birthdate.strftime('%d.%m.%Y')}\nВсе верно? 🤍",
+        reply_markup=reply_markup
+    )
+    return CONFIRM_BIRTHDATE
+
+
+# ======= Подтверждение даты =======
+async def confirm_birthdate(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    query = update.callback_query
+    await query.answer()
+
+    if query.data == "confirm_date":
+        birthdate = context.user_data["birthdate"]
+        day, month, year = birthdate.day, birthdate.month, birthdate.year
+
+        # рассчитываем энергии
+        consciousness, material, soul = calculate_energies(day, month, year)
+
+        # сохраняем ключи
+        context.user_data['keys'] = [
+            {"type": "consciousness", "title": "🧠 Энергия сознания", "number": consciousness,
+             "text": CONSCIOUSNESS_ENERGY_TEXTS.get(str(consciousness)) or "Описание пока не добавлено"},
+            {"type": "material", "title": "🏋️‍♂️ Энергия материи", "number": material,
+             "text": MATERIAL_ENERGY_TEXTS.get(str(material)) or "Описание пока не добавлено"},
+            {"type": "soul", "title": "💖 Энергия души", "number": soul,
+             "text": SOUL_ENERGY_TEXTS.get(str(soul)) or "Описание пока не добавлено"}
+        ]
+        context.user_data['current_key_index'] = 0
+
+        # отправляем первый ключ
+        first_key = context.user_data['keys'][0]
+        image_url = KEY_IMAGES[first_key['type']].get(first_key['number'])
+        await send_key_with_image(
+            query.message.chat,
+            first_key['title'],
+            first_key['number'],
+            first_key['text'],
+            image_url=image_url
+        )
+        return SHOWING_KEYS
+
+    elif query.data == "reject_date":
+        await query.edit_message_text(
+            "Ничего страшного, со всеми бывает!\n\n"
+            "Давай попробуем ещё раз 👇\n\n"
+            "Введи верную дату в формате ДД.ММ.ГГГГ\n"
+            "Например: 03.06.1995"
+        )
         return ASK_BIRTHDATE
 
-    day, month, year = birthdate.day, birthdate.month, birthdate.year
-    consciousness, material, soul = calculate_energies(day, month, year)
 
-    # Сохраняем ключи в user_data с типом для картинки
-    context.user_data['keys'] = [
-        {"type": "consciousness", "title": "🔢 Энергия сознания", "number": consciousness,
-         "text": CONSCIOUSNESS_ENERGY_TEXTS.get(str(consciousness)) or "Описание пока не добавлено"},
-        {"type": "material", "title": "🏋️‍♂️ Энергия материи", "number": material,
-         "text": MATERIAL_ENERGY_TEXTS.get(str(material)) or "Описание пока не добавлено"},
-        {"type": "soul", "title": "🕊️ Энергия души", "number": soul,
-         "text": SOUL_ENERGY_TEXTS.get(str(soul)) or "Описание пока не добавлено"}
-    ]
-    context.user_data['current_key_index'] = 0
-
-    # Отправляем первый ключ с картинкой по числу
-    first_key = context.user_data['keys'][0]
-    image_url = KEY_IMAGES[first_key['type']].get(first_key['number'])
-    await send_key_with_image(
-        update.message.chat,
-        first_key['title'],
-        first_key['number'],
-        first_key['text'],
-        image_url=image_url
-    )
-    return SHOWING_KEYS
-
-
-# ======= Пошаговое отображение ключей =======
+# ======= Показ следующего ключа =======
 async def next_key_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
 
-    idx = context.user_data.get('current_key_index', 0) + 1
-    keys = context.user_data.get('keys', [])
-
-    # Убираем старую кнопку "Далее"
+    # Убираем кнопку "➡️ Далее" после нажатия
     try:
         await query.edit_message_reply_markup(reply_markup=None)
-    except:
-        pass
+    except Exception as e:
+        logger.warning(f"Не удалось убрать кнопки: {e}")
 
-    if idx < len(keys):
-        key = keys[idx]
-        context.user_data['current_key_index'] = idx
+    # увеличиваем индекс
+    context.user_data['current_key_index'] += 1
+    index = context.user_data['current_key_index']
+
+    # если ключи ещё есть → показываем следующий
+    if index < len(context.user_data['keys']):
+        key = context.user_data['keys'][index]
         image_url = KEY_IMAGES[key['type']].get(key['number'])
+
         await send_key_with_image(
             query.message.chat,
             key['title'],
@@ -333,13 +382,18 @@ async def next_key_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         return SHOWING_KEYS
     else:
-        # Конец всех ключей — показываем финальное меню
-        await query.message.chat.send_message(
-            "✅ Это все ключи из твоей даты рождения.",
-            reply_markup=get_final_menu_markup()
+        # если ключи закончились, показываем сообщение + кнопки
+        keyboard = [
+            [InlineKeyboardButton("📅 Ввести дату рождения ещё раз", callback_data="restart_birthday")],
+            [InlineKeyboardButton("🏠 Меню", callback_data="menu"),
+             InlineKeyboardButton("🚪 Уйти", callback_data="exit")]
+        ]
+        reply_markup = InlineKeyboardMarkup(keyboard)
+        await query.message.reply_text(
+            "✨ Все ключи показаны! Спасибо 🙌",
+            reply_markup=reply_markup
         )
-        return ConversationHandler.END
-
+        return SHOWING_KEYS  # остаёмся в том же состоянии, чтобы можно было вводить дату снова
 
 # ======= Функция отправки ключа с картинкой =======
 async def send_key_with_image(chat, key_title, key_number, key_text, image_url=None):
@@ -410,10 +464,10 @@ async def broadcast_post(update_or_query, context: ContextTypes.DEFAULT_TYPE):
 # ======= /help и /cancel =======
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = (
-        "ℹ️ <b>Помощь по боту:</b>\n"
-        "/start — начать работу с ботом\n"
+        "ℹ️ <b>Помощь по помощнику:</b>\n"
+        "/start — начать работу с помощником\n"
         "/help — показать это сообщение\n\n"
-        "Для использования бота необходимо быть подписанным на канал.\n"
+        "Для использования помощника необходимо быть подписанным на канал.\n"
         f"Подписка: {CHANNEL_LINK}"
     )
     await update.message.reply_html(text)
@@ -424,8 +478,11 @@ async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 # ======= Обработка любых сообщений =======
 async def default_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    text = update.message.text
-    if text == "🚀 Запустить бота":
+    if not update.message or not update.message.text:
+        return  # игнорируем всё, что не является текстом
+
+    text = update.message.text.strip()
+    if text == "⚡️ Запустить помощника":
         user = update.effective_user
         if await check_subscription(user.id, context):
             await send_main_menu(update, context)
@@ -433,9 +490,10 @@ async def default_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await send_subscription_panel(update, context)
     else:
         await update.message.reply_text(
-            "Привет! Чтобы начать работу с ботом, пожалуйста, нажмите кнопку '🚀 Запустить бота'.",
+            "Привет! Чтобы начать работу с ботом, пожалуйста, нажмите кнопку '⚡️ Запустить помощника'.",
             reply_markup=START_KEYBOARD
         )
+
 
 # ======= MAIN =======
 def main():
@@ -446,7 +504,10 @@ def main():
         entry_points=[CallbackQueryHandler(button_handler, pattern="^birthday_calc$")],
         states={
             ASK_BIRTHDATE: [MessageHandler(filters.TEXT & ~filters.COMMAND, birthday_calc_receive)],
-            SHOWING_KEYS: [CallbackQueryHandler(next_key_handler, pattern="^next_key$")]
+            CONFIRM_BIRTHDATE: [CallbackQueryHandler(confirm_birthdate, pattern="^(confirm_date|reject_date)$")],
+            SHOWING_KEYS: [CallbackQueryHandler(next_key_handler, pattern="^next_key$"),
+                           CallbackQueryHandler(button_handler, pattern="^(menu|exit|restart_birthday)$")
+            ]
         },
         fallbacks=[CommandHandler("cancel", cancel)],
         allow_reentry=True
