@@ -81,9 +81,9 @@ KEY_IMAGES = {
         7: "https://drive.google.com/uc?export=download&id=1d2KIja0TCVur_8nAe6GANb4movVP1Jyy",
         8: "https://drive.google.com/uc?export=download&id=1IZZTPD_DVdHL2gsH2NkR3EKRGraGULAE",
         9: "https://drive.google.com/uc?export=download&id=1VdSPPy3yLKbDXI8fYs2hGCeyEfNtcF0L",
-        10: "https://drive.google.com/uc?export=download&id=",
-        11: "https://drive.google.com/uc?export=download&id=",
-        12: "https://drive.google.com/uc?export=download&id="
+        10: "https://drive.google.com/uc?export=download&id=1lbsedB_uUoBWZR0P47bUyCgUAiMNoZ6L",
+        11: "https://drive.google.com/uc?export=download&id=15JTj5UXphUyEe5A4IxALdNhHIeJbuWre",
+        12: "https://drive.google.com/uc?export=download&id=1NLk5-8Zrcm21htO0d6lGLnSOWSVwmc81"
     }
 }
 # ======= Состояния =======
@@ -116,7 +116,6 @@ def get_main_menu_markup(user_id=None):
     keyboard = [
         [InlineKeyboardButton("📅 Рассчет по дню рождения", callback_data="birthday_calc")],
         [InlineKeyboardButton("ℹ️ Помощь", callback_data="help")],
-        [InlineKeyboardButton("🚪 Уйти", callback_data="exit")]
     ]
     if is_admin:
         keyboard.append([InlineKeyboardButton("📝 Новый пост", callback_data="new_post")])
@@ -168,7 +167,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
     save_user(user.id)
     await update.message.reply_text(
-        f"👋 Привет, {user.first_name}! Помощник готов к работе. Выберите действие ниже.",
+        f"👋 Привет, {user.first_name}! Запусти помощника.",
         reply_markup=START_KEYBOARD
     )
 
@@ -190,7 +189,7 @@ async def send_subscription_panel(update: Update, context: ContextTypes.DEFAULT_
 # ======= Главное меню =======
 async def send_main_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
-    text = f"👋 Привет, {user.first_name}! Помощник готов к работе. Выберите действие ниже."
+    text = f"Помощник готов к работе. Выберите действие ниже."
     if update.message:
         await update.message.reply_text(text, reply_markup=get_main_menu_markup(user.id))
     elif update.callback_query:
@@ -322,11 +321,11 @@ async def confirm_birthdate(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         # сохраняем ключи
         context.user_data['keys'] = [
-            {"type": "consciousness", "title": "🧠 Энергия сознания", "number": consciousness,
+            {"type": "consciousness", "title": " Энергия сознания", "number": consciousness,
              "text": CONSCIOUSNESS_ENERGY_TEXTS.get(str(consciousness)) or "Описание пока не добавлено"},
-            {"type": "material", "title": "🏋️‍♂️ Энергия материи", "number": material,
+            {"type": "material", "title": "🏋️♂️ Энергия материи", "number": material,
              "text": MATERIAL_ENERGY_TEXTS.get(str(material)) or "Описание пока не добавлено"},
-            {"type": "soul", "title": "💖 Энергия души", "number": soul,
+            {"type": "soul", "title": " Энергия души", "number": soul,
              "text": SOUL_ENERGY_TEXTS.get(str(soul)) or "Описание пока не добавлено"}
         ]
         context.user_data['current_key_index'] = 0
@@ -385,29 +384,47 @@ async def next_key_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # если ключи закончились, показываем сообщение + кнопки
         keyboard = [
             [InlineKeyboardButton("📅 Ввести дату рождения ещё раз", callback_data="restart_birthday")],
-            [InlineKeyboardButton("🏠 Меню", callback_data="menu"),
-             InlineKeyboardButton("🚪 Уйти", callback_data="exit")]
+            [InlineKeyboardButton("🏠 Меню", callback_data="menu")],
+            [InlineKeyboardButton("📝 Запись на консультацию", url="https://t.me/num_insight/8")]
         ]
         reply_markup = InlineKeyboardMarkup(keyboard)
+
         await query.message.reply_text(
-            "✨ Все ключи показаны! Спасибо 🙌",
+            "Как тебе эта информация? Была ли она полезной?\n\n"
+            "Если хочешь глубже разобраться в своей нумерологической карте, переходи в мой тг-канал «Сонастройка с Ульяной»\n\n"
+            "Там я делюсь разборами, лайфхаками по нумерологии и толкованием снов.\n\n"
+            "А если чувствуешь, что хочешь полную расшифровку своей даты рождения, чтобы понять:\n\n"
+            "💰 Почему деньги приходят с трудом?\n"
+            "🌟 В чём твоя истинная реализация?\n"
+            "💡 Какие таланты стоит развивать?\nМожешь записаться ко мне на личную консультацию. Буду рада помочь ✨",
+
             reply_markup=reply_markup
         )
         return SHOWING_KEYS  # остаёмся в том же состоянии, чтобы можно было вводить дату снова
 
 # ======= Функция отправки ключа с картинкой =======
 async def send_key_with_image(chat, key_title, key_number, key_text, image_url=None):
+    placeholder = None
     if image_url:
         try:
+            # Отправляем сообщение-заглушку
+            placeholder = await chat.send_message("⏳ Рассчитываем энергию...")
+
             await chat.send_photo(photo=image_url)  # без caption
         except Exception as e:
             await chat.send_message(f"⚠️ Не удалось отправить картинку: {e}")
+        finally:
+            if placeholder:
+                try:
+                    await placeholder.delete()
+                except:
+                    pass
 
-    # Текст всегда отправляем отдельным сообщением
     await chat.send_message(
-        f"{key_title} ({key_number}):\n{key_text}",
+        key_text,
         reply_markup=get_next_key_markup()
     )
+
 
 # ======= Админ: новый пост =======
 async def new_post_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -490,7 +507,7 @@ async def default_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await send_subscription_panel(update, context)
     else:
         await update.message.reply_text(
-            "Привет! Чтобы начать работу с ботом, пожалуйста, нажмите кнопку '⚡️ Запустить помощника'.",
+            "Привет! Чтобы начать работу с помощником, пожалуйста, нажмите кнопку '⚡️ Запустить помощника'.",
             reply_markup=START_KEYBOARD
         )
 
